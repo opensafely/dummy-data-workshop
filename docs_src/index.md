@@ -1,13 +1,10 @@
 # Welcome to the workshop
 
-
-## Documentation
-
-Please go to https://opensafely.github.io/dummy-data-workshop/ to follow along.
+Go to <https://opensafely.github.io/dummy-data-workshop> to follow along.
 
 ## Setup your codespace
 
-Please go to https://github.com/opensafely/dummy-data-workshop
+Please go to <https://github.com/opensafely/dummy-data-workshop>
 
 Click on the "Use this template" button, and select "Open in a workspace"
 
