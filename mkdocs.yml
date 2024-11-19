@@ -1,0 +1,8 @@
+site_name: OpenSAFELY Symposium 2024 Dummy Data Workshop
+
+nav:
+  - Home: index.md
+
+
+docs_dir: docs_src
+site_dir: docs
