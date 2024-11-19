@@ -8,7 +8,7 @@
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
     "postCreateCommand": "/bin/bash /opt/devcontainer/postCreate.sh ${containerWorkspaceFolder}",
-    "postAttachCommand": "/bin/bash /opt/devcontainer/postAttach.sh",
+    "postAttachCommand": "./scripts/configure_r_image.sh && ./scripts/rbash.sh && /bin/bash /opt/devcontainer/postAttach.sh",
     "forwardPorts": [
         8787
     ],
@@ -32,7 +32,8 @@
             "extensions": [
                 "ms-python.python",
                 "ms-toolsai.jupyter",
-                "ms-toolsai.jupyter-renderers"
+                "ms-toolsai.jupyter-renderers",
+                "bennettoxford.opensafely"
             ],
             "settings": {
                 "extensions.ignoreRecommendations": true,
