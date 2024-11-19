@@ -1,14 +1,12 @@
 from ehrql import create_dataset
-from ehrql.tables.tpp import patients, practice_registrations
+from ehrql.tables.core import patients
 
 dataset = create_dataset()
 
 index_date = "2020-03-31"
 
-has_registration = practice_registrations.for_patient_on(
-    index_date
-).exists_for_patient()
+age = patients.age_on(index_date)
 
-dataset.define_population(has_registration)
-
+dataset.define_population((age > 18) & (age < 80))
+dataset.age = age
 dataset.sex = patients.sex
