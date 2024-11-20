@@ -13,7 +13,7 @@ dataset = create_dataset()
 
 london_msoa = (
     addresses
-    .where((addresses.msoa_code=="E02000001") &  addresses.msoa_code.is_not_null())
+    .where((addresses.msoa_code == "E02000001").is_not_null())
    .sort_by(addresses.end_date)
    .last_for_patient()
 )
