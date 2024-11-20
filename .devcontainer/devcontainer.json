@@ -8,7 +8,7 @@
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
     "postCreateCommand": "/bin/bash /opt/devcontainer/postCreate.sh ${containerWorkspaceFolder}",
-    "postAttachCommand": "./scripts/configure_r_image.sh && ./scripts/rbash.sh && /bin/bash /opt/devcontainer/postAttach.sh",
+    "postAttachCommand": "./scripts/post_attach.sh",
     "forwardPorts": [
         8787
     ],
