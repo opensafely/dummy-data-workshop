@@ -11,6 +11,8 @@ site_dir: docs
 
 theme:
   name: material
+  logo: images/icon.svg
+  favicon: images/icon.svg
 
 markdown_extensions:
   - toc:
