@@ -14,7 +14,5 @@ if [ $? -eq 1 ]; then
     echo "cat ./scripts/update_r_instructions" >> /home/rstudio/.bashrc
 fi
 
+# reload .bashrc to get the update_r command
 source /home/rstudio/.bashrc
-
-# Finally, do the usual postAttach things
-/bin/bash /opt/devcontainer/postAttach.sh
