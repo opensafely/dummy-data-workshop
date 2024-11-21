@@ -57,4 +57,4 @@ dummy_data <- data.frame(
 readr::write_csv(dummy_data, here::here("output", "dummy_dataset_1.csv.gz"))
 
 # write to arrow file
-# feather::write_feather(dummy_data, here::here("output", "dummy_dataset_1.arrow"))
+feather::write_feather(dummy_data, here::here("output", "dummy_dataset_1.arrow"))

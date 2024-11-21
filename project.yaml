@@ -24,24 +24,23 @@ actions:
       highly_sensitive:
         dataset: output/dataset_1.csv.gz
   
-  compare_dataset_1:
-    run: r:latest analysis/compare_definition_1.R
-    needs: [dummy_dataset_1, generate_dataset_1]
-    outputs:
-      highly_sensitive:
-        csv: output/comparison_1.csv
-
-  dummy_dataset_2:
-   run: r:latest analysis/dummy_definition_2.R
+  dummy_dataset_2a:
+   run: r:latest analysis/dummy_definition_2a.R
    outputs:
      highly_sensitive:
-       dataset: output/dummy_dataset_2.arrow
+       dataset: output/dummy_dataset_2a.arrow
+
+  dummy_dataset_2b:
+   run: r:latest analysis/dummy_definition_2b.R
+   outputs:
+     highly_sensitive:
+       dataset: output/dummy_dataset_2b.arrow
 
   generate_dataset_2:
    run: ehrql:v1 generate-dataset analysis/dataset_definition_2.py
      --output output/dataset_2.arrow
-  #   --dummy-data-file output/dummy_dataset_2.arrow
-  # needs: [dummy_dataset_2]
+  #   --dummy-data-file output/dummy_dataset_2b.arrow
+  # needs: [dummy_dataset_2b]
    outputs:
      highly_sensitive:
        dataset: output/dataset_2.arrow

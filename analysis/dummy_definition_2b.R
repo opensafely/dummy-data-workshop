@@ -12,14 +12,14 @@ az_name <- "COVID-19 Vaccine Vaxzevria 0.5ml inj multidose vials (AstraZeneca)"
 
 # define each variable as a node in a bayesian network
 
-sim_list_vax_info <- lst(
+sim_list <- lst(
   
   registered = bn_node(
     ~ rbernoulli(n = ..n, p = 0.99)
   ),
   
   age = bn_node(
-    ~ as.integer(rnorm(pop_n, mean= 55, sd=20)),
+    ~ as.integer(rnorm(..n, mean= 55, sd=20)),
   ),
   
   sex = bn_node(
@@ -36,7 +36,7 @@ sim_list_vax_info <- lst(
     missing_rate = ~0.2,
   ),
   vaccine_date2 = bn_node(
-    ~ covid_vax_1_day + runif(n = ..n, 3*7, 16*7),
+    ~ vaccine_date1 + runif(n = ..n, 3*7, 16*7),
     missing_rate = ~0.001,
     needs = "vaccine_date2"
   ),
@@ -46,7 +46,7 @@ sim_list_vax_info <- lst(
 
 )
 
-bn <- bn_create(sim_list, known_variables = known_variables)
+bn <- bn_create(sim_list, known_variables = c("index_date"))
 
 # plot the network
 bn_plot(bn)
@@ -54,9 +54,8 @@ bn_plot(bn)
 # plot the network (connected nodes only)
 bn_plot(bn, connected_only = TRUE)
 
-
 # simulate the dataset
-dummydata <- bn_simulate(bn, pop_size = population_size, keep_all = FALSE, .id = "patient_id")
+dummydata <- bn_simulate(bn, pop_size = pop_n, keep_all = FALSE, .id = "patient_id")
 
 
 
