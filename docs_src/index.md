@@ -51,6 +51,13 @@ The codespace will take a few minutes to launch. Please wait!
     update the R images again by running `update_r` in your codespace terminal.
 
 
+## Saving changes to your repo
+
+If you make changes to your repo during the workshop that you would like to keep, you
+will need to commit and push the changes to GitHub.  Follow the [instructions in the
+OpenSAFELY tutorial](https://docs.opensafely.org/getting-started/tutorial/publish-the-changes-to-github/)
+for a guide on how to do that.
+
 ## Notes
 
 We'll use some icons in parts of this workshop:
