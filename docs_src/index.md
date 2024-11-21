@@ -6,7 +6,7 @@ Go to <https://opensafely.github.io/dummy-data-workshop> to follow along.
 
 ### GitHub and Codespaces
 
-We will use a GitHub repository and [Codespaces](https://github.com/features/codespaces)
+We will use a GitHub repository and [Codespace](https://github.com/features/codespaces)
 for this workshop. You will need a personal [GitHub account](https://github.com). Follow the instructions
 to [setup your codespace](#setup-your-codespace).
 
@@ -22,13 +22,27 @@ Some previous experience writing code in R is recommended.
 
 ## Setup your codespace
 
-Please go to <https://github.com/opensafely/dummy-data-workshop>
+Please go to <https://github.com/opensafely/dummy-data-workshop/generate> to create a new repository from
+the workshop repo. Choose any repository name, and click Create repository. 
 
-Click on the "Use this template" button, and select "Open in a workspace"
+![Create repo](images/create_repo_from_template.png)
 
-![Open codespace button](images/codespace_btn.png)
+Wait for your repo to be generated.
 
-The codespace will take several minutes to launch. Please wait!
+![Generating repo page](images/generating_repo.png)
+
+
+When your new repo loads:
+
+1. Click the Code button.
+1. Click the Codespaces tab.
+1. Click the "Create codespace on main".
+
+![Create codespace button](images/create_codespace_btn.png)
+
+You may see a page requesting additional permissions on `opensafely/server-instructions`. If so, click "Authorize and continue".
+
+The codespace will take a few minutes to launch. Please wait!
 
 !!! Warning
     The codespace will launch with the updated version of ehrQL and R that you need
@@ -39,7 +53,7 @@ The codespace will take several minutes to launch. Please wait!
 
 ## Notes
 
-We'll use some icons in parts of this tutorial:
+We'll use some icons in parts of this workshop:
 
 :fontawesome-solid-code: For when we're looking at or modifying some code in a file.
 
