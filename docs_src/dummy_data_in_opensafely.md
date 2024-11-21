@@ -15,6 +15,9 @@ There are 3 ways to use dummy data:
 1. Provide your own dummy dataset
 
 
+### Why use ehrQL's generated dummy data?
+
+
 ### Generate a dummy dataset with ehrQL
 
 :fontawesome-solid-code: `analysis/dataset_definition.py`
@@ -28,9 +31,7 @@ from ehrql.tables.core import patients
 
 dataset = create_dataset()
 
-index_date = "2020-03-31"
-
-age = patients.age_on(index_date)
+age = patients.age_on("2020-03-31")
 
 dataset.define_population((age > 18) & (age < 80))
 dataset.age = age
@@ -90,7 +91,7 @@ Dummy data produced from a dataset definition is:
 
 - **logically valid**; it will respect logic within the dataset definition itself. For example, it won't produce a clinical event date before a patient's date of birth or after their date of death.
 
-:fontawesome-solid-code: try this out by updating `analysis/dataset_definition.py`:
+:fontawesome-solid-code: try this out by adding to `analysis/dataset_definition.py`:
 
 ```py
 from ehrql.tables.core import patients, clinical_events
@@ -200,7 +201,17 @@ the dataset definition at `analysis/dataset_definition_london_adults.py`
 
 :fontawesome-solid-code: 
 ```py
-...
+from ehrql import create_dataset
+from ehrql.tables.core import patients
+from ehrql.tables.tpp import addresses
+
+
+min_age = 18
+max_age = 80
+
+age = patients.age_on("2024-01-01")
+
+dataset = create_dataset()
 
 london_msoa = (
     addresses
@@ -265,8 +276,13 @@ We define some possible MSOAs, including the target "E02000001".
 
 :fontawesome-solid-code:
 ```py
-...
+from ehrql import create_dataset
+from ehrql.tables.core import patients
+from ehrql.tables.tpp import addresses
+
 possible_msoas = ["E02000001", "E02000002", "E02000003", "E02000004"]
+
+dataset = create_dataset()
 ```
 
 Now define an address variable that selects patients who have data in the addresses table, where the MSOA code is one of these possible codes, or none.
@@ -296,7 +312,7 @@ patient table. We also add the msoa code, just so we can check what's being prod
 :fontawesome-solid-code:
 
 ```py
-dataset.age = patients.age_on(index_date)
+dataset.age = patients.age_on("2024-01-01")
 dataset.msoa = address.msoa_code
 ```
 
