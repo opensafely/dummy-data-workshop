@@ -4,11 +4,9 @@ The expected version of analysis/dataset_definition.py at the end of the worksho
 from ehrql import create_dataset
 from ehrql.tables.core import patients, clinical_events
 
-index_date = "2020-03-31"
-
 dataset = create_dataset()
 
-age = patients.age_on(index_date)
+age = patients.age_on("2020-03-31")
 
 dataset.define_population((age > 18) & (age < 80))
 dataset.age = age

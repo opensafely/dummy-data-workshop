@@ -1,6 +1,6 @@
 from ehrql import create_dataset
 from ehrql.tables.tpp import practice_registrations, vaccinations
-from analysis.supporting_data.vaccine_product_names import COVID_VACCINE_PRODUCT_NAMES, NON_COVID_VACCINE_PRODUCT_NAMES
+from analysis.part1.supporting_data.vaccine_product_names import COVID_VACCINE_PRODUCT_NAMES, NON_COVID_VACCINE_PRODUCT_NAMES
 
 # study dates from target dataset definition (analysis/dataset_definition_covid_boosters.py)
 study_start_date = "2023-04-01"
