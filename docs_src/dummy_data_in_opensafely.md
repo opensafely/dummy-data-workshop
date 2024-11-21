@@ -370,23 +370,34 @@ patient_id,age,msoa
 6,33,E02000001
 ```
 
-!!! example "Exercise: Covid boosters"
+!!! example "Exercise: Prevalence of death from heart failure for hospitalised patients"
 
-    `analysis/ehrql_dataset_definition_covid_boosters.py` is a dataset definition that identifies the type of
-    Covid vaccine patients received in Spring 2023, and extracts information about where the
-    patients live. We expect that a downstream analysis script will use this data to analyse regional
-    variations if the type of vaccine received.
+    `analysis/ehrql_dataset_definition_hospitalised_deaths.py` is a dataset definition that identifies
+    patients who have an ONS death record with an underlying cause of death recorded, and who were
+    hospitalised 6 months before their death.
 
-    First try running this dataset definition and look at the dummy dataset it produces. As vaccine product
-    names are not defined in ehrQL, it can only produce random data that matches the expected *pattern* for
-    a product name (i.e. a string of characters), and not real product names.
+    It also extracts information about where the patients live, and their underlying cause of death
+    (an ICD-10 code). A downstream analysis script will use this data to analyse regional
+    variations in the cause of death, and identify the prevalence of ICD-10 codes for heart failure
+    (I50, I500, I501, I509) by region.
 
-    Write a dummy tables dataset definition that will create dummy tables that can be used to run the
-    dataset definition at `analysis/ehrql_dataset_definition_covid_boosters.py` and produce vaccines with valid
-    product names. Your dummy tables should also include vaccinations that are not Covid vaccines, in order
-    to test that the dataset definition correctly filters them out.
+    First try running this dataset definition and look at the dummy dataset it produces.
 
-    (:bulb: Hint: You may want to make use of the data at `analysis/supporting_data/vaccine_product_names.py`)
+    As the underlying cause of death is not used as a filter in the dataset definition, ehrQL produces
+    random strings of characters as cause of death, rather than valid ICD-10 codes. This means that the
+    dummy dataset will not be sufficient for downstream analysis that wants to categorise the data
+    by ICD-10 codes representing cause of death.
+
+    Write a dummy tables definition and use it to create dummy tables that can be used as an input to
+    the dataset definition at `analysis/ehrql_dataset_definition_hospitalised_deaths.py` to produce
+    a dataset with valid hospitalisation dates and ICD-10 codes.
+
+    Your dummy tables should include a range of ICD-10 codes, in order to allow downstream analyses
+    to categorise them and calculate prevalence. It should also include hospitalisation dates and
+    death dates outside of the dataset definition boundaries to ensure that they are correctly
+    filtered out.
+
+    (:bulb: Hint: You may want to make use of the data at `analysis/supporting_data/icd10_codes.py`)
 
 
 ## Limitations of native OpenSAFELY dummy data
