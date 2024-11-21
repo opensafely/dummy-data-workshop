@@ -155,11 +155,37 @@ Once you've created some dummy tables, you can then use those tables as the inpu
 definition again locally. Or you can use them as a starting point to generate more data, or to test your
 dataset definition is extracting data as you’d expect.
 
-:octicons-terminal-16: To run our dataset extraction again, this time with the dummy tables:
+:octicons-terminal-16: Run our dataset extraction again, this time with the dummy tables:
 ```sh
 opensafely exec ehrql:v1 generate-dataset analysis/dataset_definition.py --dummy-tables dummy_tables
 ```
 
+Note that this produces the same output dataset as before, because the tables we've created are the 
+*same* tables that ehrQL generated behind the scenes in order to create the dummy dataset.
+
+Let's check that the dataset definition is extracting patients by age as we expect, by manually
+changing some data in the tables.  
+
+Open `dummy_tables/patients.csv` and modify the date of birth for the last two patients to make patient 15 too old and patient 17 too young to match our dataset definition:
+```sh hl_lines="10 11"
+patient_id,date_of_birth,date_of_death,sex
+1,1990-07-01,,unknown
+2,1995-11-01,,male
+3,1961-08-01,2019-11-22,unknown
+6,1990-12-01,2008-10-16,unknown
+9,1959-03-01,1967-09-20,intersex
+10,1962-11-01,1968-09-04,male
+11,1951-01-01,,female
+14,1943-07-01,2014-03-10,unknown
+15,1920-09-01,2000-08-07,male
+17,2020-06-01,,unknown
+```
+
+:octicons-terminal-16: Re-run the dataset extraction with the dummy tables again, and note that patient
+15 and 17 are no longer included:
+```sh
+opensafely exec ehrql:v1 generate-dataset analysis/dataset_definition.py --dummy-tables dummy_tables
+```
 
 ### Generating dummy tables
 
