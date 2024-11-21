@@ -20,7 +20,7 @@ There are 3 ways to use dummy data:
 
 ### Generate a dummy dataset with ehrQL
 
-:fontawesome-solid-code: `analysis/part1/dataset_definition.py`
+:fontawesome-solid-code: `analysis/ehrql_dataset_definition.py`
 
 This example is a very minimal dataset definition, which finds patients between
 18 and 80, and adds their age and sex to the output dataset:
@@ -41,7 +41,7 @@ dataset.sex = patients.sex
 :octicons-terminal-16: Try generating a dummy dataset. In the terminal, run:
 
 ```sh
-opensafely exec ehrql:v1 generate-dataset analysis/part1/dataset_definition.py
+opensafely exec ehrql:v1 generate-dataset analysis/ehrql_dataset_definition.py
 ```
 
 !!! info "`opensafely exec` vs `opensafely run`"
@@ -91,7 +91,7 @@ Dummy data produced from a dataset definition is:
 
 - **logically valid**; it will respect logic within the dataset definition itself. For example, it won't produce a clinical event date before a patient's date of birth or after their date of death.
 
-:fontawesome-solid-code: try this out by adding to `analysis/part1/dataset_definition.py`:
+:fontawesome-solid-code: try this out by adding to `analysis/ehrql_dataset_definition.py`:
 
 ```py
 from ehrql.tables.core import patients, clinical_events
@@ -107,7 +107,7 @@ dataset.dod_year = patients.date_of_death.year
 !!! example "Check dummy datasets are consistent"
     Confirm for yourself that dummy datasets are consitent running the `generate-dataset` command several times and checking the output dataset from each run.
 ```sh
-opensafely exec ehrql:v1 generate-dataset analysis/part1/dataset_definition.py
+opensafely exec ehrql:v1 generate-dataset analysis/ehrql_dataset_definition.py
 ```
 
 ### Provide your own dummy tables
@@ -120,7 +120,7 @@ However, setting up lots of dummy tables can be tedious. ehrQL generates dummy d
 :octicons-terminal-16: Using our updated dataset definition file, create dummy tables and write them to a local folder called `dummy_tables`
 
 ```sh
-opensafely exec ehrql:v1 create-dummy-tables analysis/part1/dataset_definition.py dummy_tables
+opensafely exec ehrql:v1 create-dummy-tables analysis/ehrql_dataset_definition.py dummy_tables
 ```
 
 :eyes: Have a look at the files that have been created in the `dummy_tables` folder; there will be 2 
@@ -158,7 +158,7 @@ dataset definition is extracting data as you’d expect.
 
 :octicons-terminal-16: Run our dataset extraction again, this time with the dummy tables:
 ```sh
-opensafely exec ehrql:v1 generate-dataset analysis/part1/dataset_definition.py --dummy-tables dummy_tables
+opensafely exec ehrql:v1 generate-dataset analysis/ehrql_dataset_definition.py --dummy-tables dummy_tables
 ```
 
 Note that this produces the same output dataset as before, because the tables we've created are the 
@@ -185,7 +185,7 @@ patient_id,date_of_birth,date_of_death,sex
 :octicons-terminal-16: Re-run the dataset extraction with the dummy tables again, and note that patient
 15 and 17 are no longer included:
 ```sh
-opensafely exec ehrql:v1 generate-dataset analysis/part1/dataset_definition.py --dummy-tables dummy_tables
+opensafely exec ehrql:v1 generate-dataset analysis/ehrql_dataset_definition.py --dummy-tables dummy_tables
 ```
 
 ### Generating dummy tables
@@ -197,7 +197,7 @@ definition to see if it extracts the patients you expect.
 #### Example
 
 We want to extract patients who are aged 18-80 and are in the city of London (E02000001). To do this, we've written
-the dataset definition at `analysis/part1/dataset_definition_london_adults.py`
+the dataset definition at `analysis/ehrql_dataset_definition_london_adults.py`
 
 :fontawesome-solid-code: 
 ```py
@@ -231,7 +231,7 @@ E02000001, because that makes them satisfy the dataset definition.
 :octicons-terminal-16: Run this dataset definition
 
 ```sh
-opensafely exec ehrql:v1 generate-dataset analysis/part1/dataset_definition_london_adults.py
+opensafely exec ehrql:v1 generate-dataset analysis/ehrql_dataset_definition_london_adults.py
 ```
 
 :octicons-terminal-16: The output is a dataset, all with the correct MSOA code.
@@ -255,7 +255,7 @@ Output the dummy tables:
 :octicons-terminal-16: 
 
 ```sh
-opensafely exec ehrql:v1 create-dummy-tables analysis/part1/dataset_definition_london_adults.py dummy_tables
+opensafely exec ehrql:v1 create-dummy-tables analysis/ehrql_dataset_definition_london_adults.py dummy_tables
 ```
 
 The addresses.csv table that has been produced ONLY contains null values and the code E02000001 (which is
@@ -266,7 +266,7 @@ E02000001 from patients with other MSOAs, and patients who have no MSOA availabl
 check that it can extract patients of the right age from wider data; i.e. does it properly exclude patients
 who are too old/young?
 
-:fontawesome-solid-code: `analysis/part1/dummy_data_definition_london_adults.py`
+:fontawesome-solid-code: `analysis/ehrql_dummy_data_definition_london_adults.py`
 
 To do this, let's write a different dataset definition that just produces the tables. This will include the
 data we want, but also allows for producing patients who have no address data, patients whose MSOA code is
@@ -347,7 +347,7 @@ Output these dummy tables:
 :octicons-terminal-16: 
 
 ```sh
-opensafely exec ehrql:v1 create-dummy-tables analysis/part1/dummy_data_definition_london_adults.py dummy_tables
+opensafely exec ehrql:v1 create-dummy-tables analysis/ehrql_dummy_data_definition_london_adults.py dummy_tables
 ```
 
 Now use them to run the actual dataset definition:
@@ -355,7 +355,7 @@ Now use them to run the actual dataset definition:
 :octicons-terminal-16: 
 
 ```sh
-opensafely exec ehrql:v1 generate-dataset analysis/part1/dataset_definition_london_adults.py --dummy-tables dummy_tables
+opensafely exec ehrql:v1 generate-dataset analysis/ehrql_dataset_definition_london_adults.py --dummy-tables dummy_tables
 
 ```
 And we can verify that our dataset definition is indeed extracting only the patients who match our
@@ -372,7 +372,7 @@ patient_id,age,msoa
 
 !!! example "Exercise: Covid boosters"
 
-    `analysis/part1/dataset_definition_covid_boosters.py` is a dataset definition that identifies the type of
+    `analysis/ehrql_dataset_definition_covid_boosters.py` is a dataset definition that identifies the type of
     Covid vaccine patients received in Spring 2023, and extracts information about where the
     patients live. We expect that a downstream analysis script will use this data to analyse regional
     variations if the type of vaccine received.
@@ -382,11 +382,11 @@ patient_id,age,msoa
     a product name (i.e. a string of characters), and not real product names.
 
     Write a dummy tables dataset definition that will create dummy tables that can be used to run the
-    dataset definition at `analysis/part1/dataset_definition_covid_boosters.py` and produce vaccines with valid
+    dataset definition at `analysis/ehrql_dataset_definition_covid_boosters.py` and produce vaccines with valid
     product names. Your dummy tables should also include vaccinations that are not Covid vaccines, in order
     to test that the dataset definition correctly filters them out.
 
-    (:bulb: Hint: You may want to make use of the data at `analysis/part1/supporting_data/vaccine_product_names.py`)
+    (:bulb: Hint: You may want to make use of the data at `analysis/supporting_data/vaccine_product_names.py`)
 
 
 ## Limitations of native OpenSAFELY dummy data
