@@ -312,7 +312,7 @@ patient table. We also add the msoa code, just so we can check what's being prod
 :fontawesome-solid-code:
 
 ```py
-dataset.age = patients.age_on("2024-01-01")
+dataset.age = age
 dataset.msoa = address.msoa_code
 ```
 

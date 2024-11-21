@@ -3,11 +3,10 @@ from ehrql.tables.core import patients
 from ehrql.tables.tpp import addresses
 
 
-index_date = "2024-01-01"
 min_age = 18
 max_age = 80
 
-age = patients.age_on(index_date)
+age = patients.age_on("2024-01-01")
 
 dataset = create_dataset()
 
@@ -22,7 +21,7 @@ address = (
 
 no_address = ~addresses.exists_for_patient()
 
-dataset.age = patients.age_on(index_date)
+dataset.age = age
 dataset.msoa = address.msoa_code
 
 dataset.define_population(patients.exists_for_patient() & (address.exists_for_patient() | no_address))
