@@ -165,28 +165,29 @@ csv files corresponding to the two tables that this dataset definition uses.
 ![dummy tables](images/dummy_tables_folder.png)
 
 
-Now that we have some dummy tables, we can take advantage of a new feature, the ehrQL debug command from the new OpenSAFELY VSCode extension.
+???+ example "Try out the ehrQL `debug()` feature"
+    Now that we have some dummy tables, we can take advantage of a new feature, the ehrQL `debug` command from the new OpenSAFELY VSCode extension.
 
-:fontawesome-solid-code: Update the dataset definition to add a debug statement before and after our
-definition of events. Here we can have a look at the date column from the full (dummy) clinical events
-table, and then the column after we've filtered to just the first event for each patient.
+    :fontawesome-solid-code: Update the dataset definition to add a `debug` statement before and after our
+    definition of events. Here we can have a look at the date column from the full (dummy) clinical events
+    table, and then the column after we've filtered to just the first event for each patient.
 
-```py
-from ehrql import create_dataset, debug
-...
-debug(clinical_events.date)
-events = clinical_events.sort_by(clinical_events.date).first_for_patient()
-debug(events.date)
-...
-```
+    ```py
+    from ehrql import create_dataset, debug
+    ...
+    debug(clinical_events.date)
+    events = clinical_events.sort_by(clinical_events.date).first_for_patient()
+    debug(events.date)
+    ...
+    ```
 
-Click on the "Debug ehrQL" button in the bottom right.
+    Click on the "Debug ehrQL" button in the bottom right.
 
-![ehrQL debug button](images/debug_ehrql_btn.png)
+    ![ehrQL debug button](images/debug_ehrql_btn.png)
 
-This will open a new panel and display the columns we asked to debug.
+    This will open a new panel and display the columns we asked to debug.
 
-![ehrQL debug output](images/debug_output.png)
+    ![ehrQL debug output](images/debug_output.png)
 
 Once you've created some dummy tables, you can then use those tables as the input when you run your dataset
 definition again locally. Or you can use them as a starting point to generate more data, or to test your
