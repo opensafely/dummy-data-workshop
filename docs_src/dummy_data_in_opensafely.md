@@ -20,19 +20,22 @@ There are 3 ways to use dummy data:
 :fontawesome-solid-code: `analysis/ehrql_dataset_definition.py`
 
 This example is a very minimal dataset definition, which finds patients between
-18 and 80, and adds their age and sex to the output dataset:
+18 and 80, and adds their age, sex and date of their first clinical event to the output
+dataset:
 
 ```py
 from ehrql import create_dataset
-from ehrql.tables.core import patients
+from ehrql.tables.core import patients, clinical_events
 
 dataset = create_dataset()
 
 age = patients.age_on("2020-03-31")
+first_event_date = clinical_events.sort_by(clinical_events.date).first_for_patient().date
 
 dataset.define_population((age > 18) & (age < 80))
 dataset.age = age
 dataset.sex = patients.sex
+dataset.first_event_date = first_event_date
 ```
 
 :octicons-terminal-16: Try generating a dummy dataset. In the terminal, run:
@@ -51,17 +54,17 @@ opensafely exec ehrql:v1 generate-dataset analysis/ehrql_dataset_definition.py
 By default, this generates 10 patients and will print them to the terminal:
 
 ```bash
-patient_id,age,sex
-1,29,unknown
-2,24,male
-3,58,unknown
-6,29,unknown
-9,61,intersex
-10,57,male
-11,69,female
-14,76,unknown
-15,23,male
-17,25,unknown
+patient_id,age,sex,first_event_date
+1,29,unknown,2022-10-02
+2,24,male,2022-07-30
+3,58,unknown,2018-10-02
+6,29,unknown,2007-12-12
+9,61,intersex,1963-04-24
+10,57,male,1967-12-20
+11,69,female,2023-09-02
+14,76,unknown,2007-10-16
+15,23,male,1999-06-27
+17,25,unknown,2019-08-14
 ```
 
 Note that all 10 patients have been generated with ages within the expected range (18-80, as defined in the dataset definition) and sex in one of the 4 possible values.
@@ -111,13 +114,14 @@ Dummy data produced from a dataset definition is:
     ```py
     from ehrql.tables.core import patients, clinical_events
     ...
-    events = clinical_events.sort_by(clinical_events.date).first_for_patient()
-    dataset.event_date = events.date
-    dataset.after_dob = events.date > patients.date_of_birth
-    dataset.before_dod = (events.date < patients.date_of_death) | patients.date_of_death.is_null()
+    dataset.after_dob = first_event_date > patients.date_of_birth
+    dataset.before_dod = (first_event_date < patients.date_of_death) | patients.date_of_death.is_null()
     ```
 
-    Generate the dataset again and confirm that event dates are always after the patients
+    These two additional variables will return True (T) if the clinical event is within
+    the patient's lifespan.
+
+    Generate the dataset again and confirm that event dates are always after the patient's
     date of birth and before their date of death.
 
     :octicons-terminal-16:
@@ -125,7 +129,7 @@ Dummy data produced from a dataset definition is:
     opensafely exec ehrql:v1 generate-dataset analysis/ehrql_dataset_definition.py
 
     ...
-    patient_id,age,sex,event_date,after_dob,before_dod
+    patient_id,age,sex,first_event_date,after_dob,before_dod
     1,29,unknown,2022-10-02,T,T
     2,24,male,2022-07-30,T,T
     3,58,unknown,2018-10-02,T,T
@@ -149,7 +153,7 @@ in the OpenSAFELY documentation for a guide to the available tables and columns.
 
 However, setting up lots of dummy tables can be tedious. ehrQL generates dummy datasets by first creating dummy tables, and then running the dataset definition on them. We can have ehrQL output those dummy tables directly, rather than the dummy dataset.
 
-:octicons-terminal-16: Using our updated dataset definition file, create dummy tables and write them to a local folder called `dummy_tables`
+:octicons-terminal-16: Using the previous dataset definition file, create dummy tables and write them to a local folder called `dummy_tables`
 
 ```sh
 opensafely exec ehrql:v1 create-dummy-tables analysis/ehrql_dataset_definition.py dummy_tables
