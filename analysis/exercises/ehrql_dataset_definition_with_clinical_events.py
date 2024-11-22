@@ -1,6 +1,7 @@
 """
 The expected version of analysis/dataset_definition.py at the end of the workshop steps.
 """
+
 from ehrql import create_dataset
 from ehrql.tables.core import patients, clinical_events
 
@@ -14,5 +15,7 @@ dataset.sex = patients.sex
 
 events = clinical_events.sort_by(clinical_events.date).first_for_patient()
 dataset.event_date = events.date
-dataset.dob_year = patients.date_of_birth.year
-dataset.dod_year = patients.date_of_death.year
+dataset.after_dob = events.date > patients.date_of_birth
+dataset.before_dod = (
+    events.date < patients.date_of_death
+) | patients.date_of_death.is_null()
