@@ -13,7 +13,7 @@ to [setup your codespace](#setup-your-codespace).
 ### ehrql 
 The ehrQL code that we'll look at in this workshop is not very complicated,
 however, it is assumed that you are not *completely* new to ehrQL. If you
-need a reminder, please see the [ehrQL checklist](https://docs.opensafely.org/ehrql/reference/cheatsheet) and the 
+need a reminder, please see the [ehrQL cheat sheet](https://docs.opensafely.org/ehrql/reference/cheatsheet) and the 
 [ehrql documentation](https://docs.opensafely.org/ehrql).
 
 ### R
