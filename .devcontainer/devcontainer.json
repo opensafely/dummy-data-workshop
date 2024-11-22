@@ -8,7 +8,7 @@
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
     "postCreateCommand": "/bin/bash /opt/devcontainer/postCreate.sh ${containerWorkspaceFolder}",
-    "postStartCommand": "./scripts/post_start.sh",
+    "postStartCommand": "opensafely pull ehrql",
     "postAttachCommand": "/bin/bash /opt/devcontainer/postAttach.sh",
     "forwardPorts": [
         8787
