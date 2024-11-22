@@ -255,7 +255,7 @@ dataset.age = age
 london_msoa = (
     addresses
     .where((addresses.msoa_code == "E02000001").is_not_null())
-    .sort_by(addresses.end_date)
+    .sort_by(addresses.start_date)
     .last_for_patient()
 )
 
@@ -497,7 +497,6 @@ patient_id,age,msoa
 - Semantic validity is difficult to ensure in generated dummy data
     - Certain interactions between tables/columns that should reflect reality will not necessarily be
       respected unless they are specified in the dataset definition, e.g.
-        - no consultations after death
         - no discharge before admission
         - no COVID-19 vaccines before 2020
 

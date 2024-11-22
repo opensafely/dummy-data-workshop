@@ -13,8 +13,8 @@ dataset.age = age
 
 london_msoa = (
     addresses
-    .where((addresses.msoa_code == "E02000001").is_not_null())
-    .sort_by(addresses.end_date)
+    .where(addresses.msoa_code == "E02000001")
+    .sort_by(addresses.start_date)
     .last_for_patient()
 )
 
