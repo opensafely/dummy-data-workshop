@@ -457,7 +457,7 @@ patient_id,age,msoa
 
 ???+ example "Generating dummy tables: prevalence of death from heart failure for hospitalised patients"
 
-    `analysis/ehrql_dataset_definition_hospitalised_deaths.py` is a dataset definition that identifies
+    `analysis/exercises/ehrql_dataset_definition_hospitalised_deaths.py` is a dataset definition that identifies
     patients who have an ONS death record with an underlying cause of death recorded, and who were
     hospitalised 6 months before their death.
 
@@ -474,7 +474,7 @@ patient_id,age,msoa
     by ICD-10 codes representing cause of death.
 
     Write a dummy tables definition and use it to create dummy tables that can be used as an input to
-    the dataset definition at `analysis/ehrql_dataset_definition_hospitalised_deaths.py` to produce
+    the dataset definition at `analysis/exercises/ehrql_dataset_definition_hospitalised_deaths.py` to produce
     a dataset with valid hospitalisation dates and ICD-10 codes.
 
     Your dummy tables should include a range of ICD-10 codes, in order to allow downstream analyses
@@ -484,7 +484,7 @@ patient_id,age,msoa
 
     Note that the original dataset definition sdoes not need to be modified in any way.
 
-    (:bulb: Hint: You may want to make use of the data at `analysis/supporting_data/icd10_codes.py`)
+    (:bulb: Hint: You may want to make use of the data at `analysis/exercises/supporting_data/icd10_codes.py`)
 
 
 ## Limitations of native OpenSAFELY dummy data
