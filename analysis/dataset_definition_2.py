@@ -1,5 +1,5 @@
 from ehrql import create_dataset
-from ehrql.tables.tpp import patients, practice_registrations, vaccinations
+from ehrql.tables.tpp import patients, practice_registrations, vaccinations, ons_deaths
 
 dataset = create_dataset()
 
@@ -9,13 +9,20 @@ has_registration = practice_registrations.for_patient_on(
     index_date
 ).exists_for_patient()
 
-dataset.define_population(has_registration)
+alive = (
+  ons_deaths.date.is_on_or_after(index_date) | 
+  ons_deaths.date.is_null()
+)
+
+dataset.define_population(
+  has_registration & 
+  alive
+)
 dataset.configure_dummy_data(population_size=1000)
 
 dataset.registered = has_registration
 dataset.age = patients.age_on(index_date)
 dataset.sex = patients.sex
-
 
 covid_vaccinations = (
   vaccinations
@@ -34,3 +41,6 @@ covid_vaccinations2 = (
   )
 dataset.vaccine_date2 = covid_vaccinations2.date
 dataset.vaccine_product2 = covid_vaccinations2.product_name
+
+dataset.death_date = ons_deaths.date
+

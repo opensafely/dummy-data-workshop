@@ -18,18 +18,20 @@ dummy_data_nomissing <- tibble(
   vaccine_product1 = sample(c(pfizer_name, az_name), size = pop_n, replace=TRUE, prob = c(0.50, 0.50)),
   vaccine_date2 = vaccine_date1 + runif(pop_n, 3*7, 16*7),
   vaccine_product2 = if_else(runif(pop_n)<0.95, vaccine_product1, "az"),
+  death_date = index_date + runif(pop_n, 0, 1000)
 )
 
 dummy_data <- 
   mutate(
     dummy_data_nomissing,
+    sex = if_else(runif(pop_n)<0.01, NA_character_, sex),
     vaccine_date1 = if_else(runif(pop_n)<0.2, as.Date(NA), vaccine_date1),
     vaccine_product1 = if_else(is.na(vaccine_date1), NA_character_, vaccine_product1),
     vaccine_date2 = if_else(runif(pop_n)<0.1 | is.na(vaccine_date1), as.Date(NA), vaccine_date2),
-    vaccine_product2 = if_else(is.na(vaccine_date2), NA_character_, vaccine_product2)
+    vaccine_product2 = if_else(is.na(vaccine_date2), NA_character_, vaccine_product2),
+    death_date = if_else(runif(pop_n)<0.95, as.Date(NA), death_date)
   )
 
-
 # write to arrow file
-feather::write_feather(dummy_data, path = here::here("output", "dummy_dataset_2a.arrow"))
+arrow::write_feather(dummy_data, sink = here::here("output", "dummy_dataset_2a.arrow"))
 

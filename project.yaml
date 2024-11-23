@@ -36,18 +36,25 @@ actions:
       highly_sensitive:
         dataset: output/dummy_dataset_2b.arrow
 
+  dummy_dataset_2c:
+      run: ehrql:v1 generate-dataset analysis/dataset_definition_2.py
+        --output output/dummy_dataset_2c.arrow
+        --dummy-data-file output/dummy_dataset_2b.arrow
+      needs: [dummy_dataset_2b]
+      outputs:
+        highly_sensitive:
+          dataset: output/dummy_dataset_2c.arrow
+
   generate_dataset_2:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_2.py
-     --output output/dataset_2.arrow
-  #   --dummy-data-file output/dummy_dataset_2b.arrow
-  # needs: [dummy_dataset_2b]
+      --output output/dataset_2.arrow
     outputs:
       highly_sensitive:
         dataset: output/dataset_2.arrow
 
-  compare_dataset_2:
-    run: r:latest analysis/compare_definition_2.R
-    needs: [dummy_dataset_2a, dummy_dataset_2b, generate_dataset_2]
-    outputs:
-      highly_sensitive:
-        csv: output/compare_dataset_2.csv
+#  compare_dataset_2:
+#    run: r:latest analysis/compare_definition_2.R
+#    needs: [dummy_dataset_2a, dummy_dataset_2b, dummy_dataset_2c, generate_dataset_2]
+#    outputs:
+#      highly_sensitive:
+#        csv: output/compare_dataset_2.csv
