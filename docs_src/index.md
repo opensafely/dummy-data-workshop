@@ -44,13 +44,6 @@ You may see a page requesting additional permissions on `opensafely/server-instr
 
 The codespace will take a few minutes to launch. Please wait!
 
-!!! Warning
-    The codespace will launch with the updated version of ehrQL and R that you need
-    for this workshop. You should ignore any terminal reminders to run `opensafely pull`,
-    as this will replace the custom R images that we are using. If you need to, you can
-    update the R images again by running `update_r` in your codespace terminal.
-
-
 ## Saving changes to your repo
 
 If you make changes to your repo during the workshop that you would like to keep, you
