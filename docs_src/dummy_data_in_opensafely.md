@@ -175,9 +175,12 @@ csv files corresponding to the two tables that this dataset definition uses.
     ```py
     from ehrql import create_dataset, debug
     ...
+    # show the date column from the original clinical_events table
     debug(clinical_events.date)
-    events = clinical_events.sort_by(clinical_events.date).first_for_patient()
-    debug(events.date)
+    # filter to a patient frame, with the first event for each patient
+    first_events = clinical_events.sort_by(clinical_events.date).first_for_patient()
+    # show the date column from the filtered first_events frame
+    debug(first_events.date)
     ...
     ```
 
